@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AService {
-    private static final int MAX_WAIT_TIME = 1000;
+    private static final int MAX_WAIT_TIME = 200;
 
     private static final Logger log = LoggerFactory.getLogger(AService.class);
 
@@ -28,7 +28,7 @@ public class AService {
         try (Scope scope = tracer.scopeManager().activate(span)) {
 
             // Run random number of sub operations randomly
-            if (RandomUtil.randomBool()) {
+            if (RandomUtil.randomInt(10) <= 7) {
                 doOp(operationName + "-" + RandomUtil.generateRandomString());
             }
 
@@ -60,10 +60,6 @@ public class AService {
 
     public void doOp2() {
         doOp("op2");
-    }
-
-    public void doOp3() {
-        doOp("op3");
     }
 
     public void doRandomOp() {

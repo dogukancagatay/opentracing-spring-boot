@@ -33,10 +33,10 @@ public class AController {
                     + "<ul>"
                     + "<li><a href=\"/api/op1\">Run Operation 1</a></li>"
                     + "<li><a href=\"/api/op2\">Run Operation 2</a></li>"
-                    + "<li><a href=\"/api/op3\">Run Operation 3</a></li>"
                     + "<li><a href=\"/api/opr\">Run Multiple Random Operations</a></li>"
                     + "<li><a href=\"/sequential-run\">Run Sequential Operations</a></li>"
                     + "</ul>"
+                    + "<p><a href=\"http://localhost:16686/search\">Go to Jaeger UI</a></p>"
                     + "</body></html>";
         } finally {
             span.finish();
@@ -55,12 +55,7 @@ public class AController {
             case "op2":
                 service.doOp2();
                 break;
-            case "op3":
-                service.doOp3();
-                break;
             default:
-                service.doRandomOp();
-                service.doRandomOp();
                 service.doRandomOp();
                 service.doRandomOp();
                 service.doRandomOp();
@@ -78,17 +73,20 @@ public class AController {
 
         Span span = tracer.buildSpan("seq-cont-op1").start();
         try (Scope scope = tracer.scopeManager().activate(span)) {
-            service.doOp1();
+            service.doRandomOp();
         } finally {
             span.finish();
         }
 
         span = tracer.buildSpan("secondary-seq-op").start();
         try (Scope scope = tracer.scopeManager().activate(span)) {
-            service.doOp1();
+            service.doRandomOp();
         } finally {
             span.finish();
         }
-        return "Hello world";
+
+        return "<html><body><p>Sequential operations completed. "
+                + "<a href=\"/\">Go to home</a>.</p></body></html>"
+                ;
     }
 }
