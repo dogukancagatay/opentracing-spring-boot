@@ -19,7 +19,7 @@ docker-compose up -d --build
 
 ## Enable/Disable Tracing
 
-You can enable/disable by setting `opentracing.jaeger.enabled` property.
+You can enable/disable by setting `opentracing.jaeger.enabled` property or `OPENTRACING_JAEGER_ENABLED` environment variable.
 
 ## Notes
 - If `opentracing-spring-jaeger-starter` dependency is not included, NoopTracer is used, practically disabling tracing.
